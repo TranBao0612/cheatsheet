@@ -100,6 +100,9 @@ ALTER TABLE table_name
 --- Delete
 ALTER TABLE table_name
     DROP CONSTRAINT key_name;
+--- Rename
+ALTER TABLE table_name
+    RENAME TO new_name;
 ```
 - Add, delete, modify columns:
 ```sql
@@ -110,7 +113,7 @@ ALTER TABLE table_name
     DROP COLUMN column_name;
 --- Rename
 ALTER TABLE table_name
-    RENAME COLUMN old_name to new_name;
+    RENAME COLUMN old_name TO new_name;
 --- Modify
 ALTER TABLE table_name
     MODIFY COLUMN column_name datatype constraints;
@@ -140,6 +143,23 @@ TRUNCATE TABLE table_name;
 DELETE FROM table_name;
 ```
 #### 2.3. Queries
+```sql
+--- Example with appropriate keywords
+SELECT DISTINCT att1 AS "Name1", att2, att3 AS "Name 3", ...
+FROM table1 alias1
+    JOIN table2 alias2 ON condition
+    JOIN tableN aliasN ON condition
+WHERE condition
+GROUP BY att1, att2, ...
+HAVING group_condition
+ORDER BY att1, att2, att3 ASC --- or DESC
+``` 
+- `AS` rename the column in the query and not affect the original table
+- `GROUP BY` with more than 2 atts means treating that tuples as 1 single value
+- group_condition of `HAVING` is for those cannot specified by `WHERE` (Ex: Aggregate functions)
+- `ORDER BY` order rows by attributes with priority decreasing from left to right, can specify order condition more detail by `ORDER BY att1 ASC, att2 DESC, att3 ASC, ...`
+- A few aggregate functions in sql: `MIN()`, `MAX()`, `COUNT()`, `SUM()`, `AVG()`
+- **NOTE**: Aggregate functions ignore null values (except for `COUNT(*)`).
 #### 2.4. Transactions: COMMIT, ROLLBACK, SAVEPOINTS
 ```sql
 COMMIT;
@@ -155,7 +175,68 @@ ROLLBACK TO savepoint_name;
     + Can create as many savepoints as wish.
     + Can Rollback to any savepoint, as long as that savepoint hasn't been released (deleted).
     + All savepoints are released automatically after `COMMIT`.
+    + After rollback, all savepoints after the current point are released.
+#### 2.5. View and Others
+##### VIEW
+```sql
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+WITH CHECK OPTION;
+```
+- View is a saved query, it updates automatically if the table which it retrieves data from update.
+- Update data through a view is possible if it is a single view (view from 1 table, no join operation) without any aggregate function
+    + View involving join may be updatable, but not guaranteed.
+- `WITH CHECK OPTION` is optional. It enforce: "If update the underlying table through view, and the update make any row currently in the view disappear from the view, then that update is rejected."
 ---
+##### TRIGGER
+```sql
+--- View existing triggers
+SHOW TRIGGERS;
+--- DML Trigger: INSERT, UPDATE, DELETE
+CREATE TRIGGER trigger_name
+BEFORE UPDATE ON table_name --- Can replace BEFORE with AFTER or INSTEAD OF, concatenate DML with 'OR'
+FOR EACH ROW
+BEGIN
+    [SQL statemenr to be executed]
+END;
+--- Example
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    updated_at TIMESTAMP
+);
+CREATE TRIGGER update_timestamp
+BEFORE UPDATE OR DELETE ON users
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = CURRENT_TIMESTAMP;
+END;
+```
+- `INSTEAD OF` replace the code with defined code.
+- Possible usage of `TRIGGER`: add updated timestamp, insert default value if violate domain constraints, ...
+```sql
+--- DDL Trigger: CREATE, ALTER, DROP TABLE
+CREATE TRIGGER trigger_name
+ON DATABASE --- for DDL events in current DB only, use ON SERVER for server-level DDL events
+FOR CREATE_TABLE --- or ALTER_TABLE/ DROP_TABLE or all 3, concatenate DDL with ','
+AS 
+BEGIN
+   PRINT 'you can not create table in this database';
+   ROLLBACK;
+END;
+--- Example
+CREATE TRIGGER prevent_table_creation
+ON DATABASE
+FOR CREATE_TABLE, ALTER_TABLE, DROP_TABLE --- AFTER is default in this case, Oracle supports BEFORE, SQL Server doesn't
+AS 
+BEGIN
+   PRINT 'you can not create, drop and alter table in this database';
+   ROLLBACK;
+END;
+```
 ### 3. Relational Algebra
 Note: Relational algebra create a **new relation** (like queries), original relations are not modified.
 | Operation | Symbol Name | Symbol + Syntax | Equivalent SQL statement | Type | Note |
