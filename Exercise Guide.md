@@ -50,13 +50,14 @@ In SQLSummary.md
 Note: 
 - Relational algebra create a **new relation** (like queries), original relations are not modified.
 - Right/left/full outer join also keep duplicated columns.
+- Aggregate function `COUNT` only count rows and not remove duplications
 
 &nbsp;
 
 | Operation | Symbol Name | Symbol + Syntax | Equivalent SQL statement | Type | Note |
 |-----------|-------------|:---------------:|--------------------------|------|------|
 | select    | sigma       | $\sigma_{condition}(R)$ | SELECT * FROM R WHERE condition | Unary | |
-| project   | pi          | $\pi_{att1, att2, ...}(R)$ | SELECT att1, att2, ... FROM R | Unary | |
+| project   | pi          | $\pi_{att1, att2, ...}(R)$ | SELECT att1, att2, ... FROM R | Unary | Automatically remove duplications |
 | rename    | rho         | $\rho_{name(name1, name2, ...)}(R)$ | SELECT * AS name1, name2, ... FROM R name| Unary | Có thể chỉ đổi tên table/cols |
 | (equi/theta)join |      | $R \underset{join condition}{\Join} S$ | SELECT * FROM R JOIN S ON join condition | Binary | R có n cols, S có m cols thì result table có n+m cols, giữ luôn duplicated cols |
 | right outer join |      | R ⟖ S          | RIGHT JOIN ... ON ...    |      | Remember to specify join condition like normal join |
@@ -68,7 +69,7 @@ Note:
 | intersection |          | $R \cap S$      | INTERSECT               | from set theory | |
 | difference (or minus) | | $R - S$         | MINUS                    | from set theory | |
 | cartesian product |     | $R \times S$    | SELECT * FROM R CROSS JOIN S; SELECT * FROM R, S | from set theory | Tưởng tượng như nhân vector thành matrix |
-| aggregate function |    | $\mathcal{F}_{function(att)} (R)$ | SELECT function(att) FROM R | | |
+| aggregate function |    | $\langle \textit{grouping attributes} \rangle \mathcal{F}_{func1 att1, func2 att2, ...} (R)$ | SELECT function(att) FROM R | | |
   
 
 ---
