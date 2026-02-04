@@ -47,22 +47,28 @@
 ### 2. SQL Statement
 In SQLSummary.md
 ### 3. Relational Algebra
-Note: Relational algebra create a **new relation** (like queries), original relations are not modified.
+Note: 
+- Relational algebra create a **new relation** (like queries), original relations are not modified.
+- Right/left/full outer join also keep duplicated columns.
+
+&nbsp;
+
 | Operation | Symbol Name | Symbol + Syntax | Equivalent SQL statement | Type | Note |
 |-----------|-------------|:---------------:|--------------------------|------|------|
 | select    | sigma       | $\sigma_{condition}(R)$ | SELECT * FROM R WHERE condition | Unary | |
 | project   | pi          | $\pi_{att1, att2, ...}(R)$ | SELECT att1, att2, ... FROM R | Unary | |
 | rename    | rho         | $\rho_{name(name1, name2, ...)}(R)$ | SELECT * AS name1, name2, ... FROM R name| Unary | Có thể chỉ đổi tên table/cols |
-| join      | theta       | $R \underset{join condition}{\Join} S$ | SELECT * FROM R JOIN S ON join condition | Binary | R có n cols, S có m cols thì result table có n+m cols, giữ luôn duplicated cols |
-| right outer join |      | R ⟖ S          | RIGHT JOIN               |      |      |
-| left outer join |       | R ⟕ S          | LEFT JOIN                |      |      |
-| full outer join |       | R ⟗ S          | FULL JOIN                |      |      |
+| (equi/theta)join |      | $R \underset{join condition}{\Join} S$ | SELECT * FROM R JOIN S ON join condition | Binary | R có n cols, S có m cols thì result table có n+m cols, giữ luôn duplicated cols |
+| right outer join |      | R ⟖ S          | RIGHT JOIN ... ON ...    |      | Remember to specify join condition like normal join |
+| left outer join |       | R ⟕ S          | LEFT JOIN ... ON ...     |      | Remember to specify join condition like normal join |
+| full outer join |       | R ⟗ S          | FULL JOIN ... ON ...     |      | Remember to specify join condition like normal join |
+| natural join|           | $R * S$         | NATURAL JOIN             |      | Not recommended in real-life application |
 | division  |             | $R(A, B) \div S(B)$ | | Binary | A = (all columns of R) \ B. Return rows of R if for every A, it contains all B in S.B *(Ex: Display professors who teach every course)* |
 | union     |             | $R \cup S$      | UNION                    | from set theory | |
 | intersection |          | $R \cap S$      | INTERSECT               | from set theory | |
 | difference (or minus) | | $R - S$         | MINUS                    | from set theory | |
-| cartesian product |     | $R \times S$    |                          | from set theory | Tưởng tượng như nhân vector thành matrix |
-| aggregate function |    | $\mathcal{F}_{function(att)} (R)$ | | | |
+| cartesian product |     | $R \times S$    | SELECT * FROM R CROSS JOIN S; SELECT * FROM R, S | from set theory | Tưởng tượng như nhân vector thành matrix |
+| aggregate function |    | $\mathcal{F}_{function(att)} (R)$ | SELECT function(att) FROM R | | |
   
 
 ---

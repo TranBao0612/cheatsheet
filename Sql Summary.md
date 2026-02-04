@@ -1,9 +1,15 @@
 # SQL COMMAND
 ## DEFINITION
 - DDL (Data Definition Language): defining, altering & deleting DB structures such as tables, indexes or schemas.
+<<<<<<< HEAD
 - DML (Data Manipulation Language): manipulate the data stored in database tables.
 - TCL (Transaction Control Language): control transaction.
 - DQL (Data Query Language): control access to data in the database by granting or revoking permissions.
+=======
+- DML (Data Manipulation Language): fetch data from the database.
+- TCL (Transaction Control Language): control transaction.
+- DQL (Data Query Language): manipulate the data stored in database tables.
+>>>>>>> f267f0fb361f3f97182319e6b5fd9fab3edb27ce
 - DCL (Data Control Language): control access to data in the database by granting or revoking permissions.
 ## COMMANDS
 - DDL: `CREATE`, `DROP`, `ALTER`, `TRUNCATE`, `COMMENT`, `RENAME ... TO ...`
@@ -40,10 +46,17 @@ CREATE TABLE CUSTOMERS (
     DEPARTMENT_ID NUMBER(22) NOT NULL,
     FOREIGN KEY DEPARTMENT_ID REFERENCES DEPARTMENT(DEPARTMENT_ID), --- 1st, for composite key without name
     CONSTRAINT FK_name FOREIGN KEY DEPARTMENT_ID REFERENCES DEPARTMENT(DEPARTMENT_ID), --- 2nd, set name for foreign key
+<<<<<<< HEAD
     FOREIGN KEY (DEPARTMENT_ID) 
         REFERENCES DEPARTMENT(DEPARTMENT_ID) 
         ON DELETE SET NULL, --- If references is deleted, set null
     FOREIGN KEY (DEPARTMENT_ID) 
+=======
+    FOREIGN KEY DEPARTMENT_ID 
+        REFERENCES DEPARTMENT(DEPARTMENT_ID) 
+        ON DELETE SET NULL, --- If references is deleted, set null
+    FOREIGN KEY DEPARTMENT_ID 
+>>>>>>> f267f0fb361f3f97182319e6b5fd9fab3edb27ce
         REFERENCES DEPARTMENT(DEPARTMENT_ID) 
         ON DELETE CASCADE, --- If references is deleted, delete whole rows that store the deleted references
 );
