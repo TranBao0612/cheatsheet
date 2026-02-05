@@ -51,6 +51,12 @@ Note:
 - Relational algebra create a **new relation** (like queries), original relations are not modified.
 - Right/left/full outer join also keep duplicated columns.
 - Aggregate function `COUNT` only count rows and not remove duplications
+- Result table return by grouped aggregate functions have:
+    + Grouping attribute(s)
+    + Aggregated values
+    + Any attributes that is functional dependent on set of grouping attribute(s)
+- Complete set of Algebra Operation: $\sigma$, $\pi$, $-$, $\rho$, $\times$, $\cup$ <br>
+    => Any other operations can be expressed by combination of the above
 
 &nbsp;
 
@@ -60,10 +66,10 @@ Note:
 | project   | pi          | $\pi_{att1, att2, ...}(R)$ | SELECT att1, att2, ... FROM R | Unary | Automatically remove duplications |
 | rename    | rho         | $\rho_{name(name1, name2, ...)}(R)$ | SELECT * AS name1, name2, ... FROM R name| Unary | Có thể chỉ đổi tên table/cols |
 | (equi/theta)join |      | $R \underset{join condition}{\Join} S$ | SELECT * FROM R JOIN S ON join condition | Binary | R có n cols, S có m cols thì result table có n+m cols, giữ luôn duplicated cols |
-| right outer join |      | R ⟖ S          | RIGHT JOIN ... ON ...    |      | Remember to specify join condition like normal join |
-| left outer join |       | R ⟕ S          | LEFT JOIN ... ON ...     |      | Remember to specify join condition like normal join |
-| full outer join |       | R ⟗ S          | FULL JOIN ... ON ...     |      | Remember to specify join condition like normal join |
-| natural join|           | $R * S$         | NATURAL JOIN             |      | Not recommended in real-life application |
+| right outer join |      | R ⟖ S          | RIGHT JOIN ... ON ...    | Binary | Remember to specify join condition like normal join |
+| left outer join |       | R ⟕ S          | LEFT JOIN ... ON ...     | Binary | Remember to specify join condition like normal join |
+| full outer join |       | R ⟗ S          | FULL JOIN ... ON ...     | Binary | Remember to specify join condition like normal join |
+| natural join|           | $R * S$         | NATURAL JOIN             | Binary | Not recommended in real-life application |
 | division  |             | $R(A, B) \div S(B)$ | | Binary | A = (all columns of R) \ B. Return rows of R if for every A, it contains all B in S.B *(Ex: Display professors who teach every course)* |
 | union     |             | $R \cup S$      | UNION                    | from set theory | |
 | intersection |          | $R \cap S$      | INTERSECT               | from set theory | |
@@ -76,9 +82,6 @@ Note:
 ## Section C
 ### 4. Functional Dependencies & Normalization
 #### Functional Dependency
-- Định nghĩa dễ hiểu: B functional dependent on A nếu
-    - att (hoặc set các atts) A có thể làm key cho att (các atts) B
-    - Nếu 2 records của A giống nhau => correspond records của B cũng phải giống nhau 
 - Điều kiện để là candidate key:
     - Is SK: F<sup>+</sup> contains all atts of R
     - Is minimal 
@@ -92,22 +95,15 @@ Note:
             (nhớ kiểm tra với candidate key trong C để xem có minimal ko)
 
 #### Normalization
-1. Categories: 1NF, 2NF, 3NF, BCNF
-    - 1NF: Không có att nào là composite/multivalue
-    - 2NF: Non-key atts phải depend on 
-        + **all candidate keys** của relation 
-        + **all components** của mỗi candidate key *(remove partial dependency)*
-    - 3NF: Non-key att phải **directly** dependent on candidate key *remove transitive dependency*
-        For each FD X->A in R:
-        1. X is SK , or
-        2. A is part of any candidate key
-    - BCNF: là 3NF nhưng bỏ điều kiện số 2
-2. Normalized method
-    Tách bảng cho tới khi nào thỏa điều kiện thì thôi.
+Normalized method: Tách bảng cho tới khi nào thỏa điều kiện thì thôi.
+- -> 1NF: remove multivalued & composite att
+- -> 2NF: remove partial dependency from 1NF
+- -> 3NF: remove transitive dependency from 2NF
+- -> BCNF: 3NF first, then ensure for every X->A, X should be an SK
 
 
 ---
-### 5. Transaction Procesing
+### 5. Serializable Schedule
 1. Table (để trình bày)
     - Bao nhiêu cái T thì vẽ bấy nhiêu cột
     - Viết operation trong S theo từng cột (**Note**: mỗi hàng chỉ viết 1 operation)
