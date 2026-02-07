@@ -144,6 +144,9 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 |                    | Value            | $v_i \in dom(A_i)$ or $v_i = NULL$ *(if permitted)* |
 |                    |                  | Denote: $v_i = t[A_i]$ or $t.A_i$ |
 
+`Note`: 
+- Attributes of R are considered to be in specific order.
+- Tuples of R are NOT considered to be in specific order.
 &nbsp;
 
 ## Relational Integrity Constraints
@@ -161,7 +164,6 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 - Primary key (PK): choose 1 from the candidates key
 ### Entity Integrity
 - **PK NOT NULL**
-- Each relation must have a PK
 ### Referential Integrity (FK)
 - Ensures that relationships between tables remain consistent
 - FK should references a PK

@@ -32,9 +32,11 @@
 # 2. CONCEPT
 ## Data model
 - Def: set of concepts to describe the structure, operations & constraints of a DB
-- Structure:  elements *(and their data types)*, *groups of elements (e.g. entity, record, table)*, a926482nd relationships among such groups 
+- Structure:  elements *(and their data types)*, *groups of elements (e.g. entity, record, table)*, and relationships among such groups 
 
 ## Categories of Data Model
+| | | |
+|-|-|-|
 | Conceptual DM      | high-level, semantic | entity-based, object-based *(e.g. ER Diagram)* |
 | Physical DM        | low-level, internal  | described how data is stored in a computer     |
 | Implementation DM  | representional       | concepts fall between 2 *(e.g. Relational DM)* |
@@ -74,9 +76,24 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 
 
 # 5. RELATIONAL MODEL & RELATIONAL DB CONSTRAINTS
+| Informal           | Formal           | Notation               |
+|:-------------------|:-----------------|:-----------------------|
+| Table              | Relaion          | R: name of relation    |
+| Column header      | Attribute        | $A_1$, $A_2$, ...      |
+| All possible value in the column | Domain | $dom(A_1), dom(A_2)$, ... |
+| Row                | Tuple            | $t_i = <v_1, v_2, ... , v_n>$ |
+| Table definition   | Schema of Relation | $R(A_1, A_2, ... , A_n)$ |
+|                    | Set of Schema    | $S = {R_1, R_2, ... , R_n}$ |
+|Populated table     | State/value/population of relation | $r(R) = {t_1, t_2, ... , t_n} \subset dom(A_1) \times dom(A_2) \times ... \times dom(A_n)$ |
+|                    | Value            | $v_i \in dom(A_i)$ or $v_i = NULL$ *(if permitted)* |
+|                    |                  | Denote: $v_i = t[A_i]$ or $t.A_i$ |
+
+`Note`: 
+- Attributes of R are considered to be in specific order.
+- Tuples of R are NOT considered to be in specific order.
 ## Relational Integrity Constraints
 - Key Constraint
-- Entity Integrity Constraint: PK NOT NULL *(and each relation must have PK)*
+- Entity Integrity Constraint: PK NOT NULL 
 - Referential Integrity Constraints: FK values must be taken from referencing PK or = NULL
 - Domain Constraint
 - Others (not supported by basic relational model): e.g. Semantic Integrity Constraint
