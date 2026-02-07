@@ -158,22 +158,23 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 - Durability/Permanency
 
 ## Characterizing schedule
+- Schedule (or history) S on n transactions.
 - Recoverable Schedule: 
     + No transaction T in S commits until all transactions T’ that have written an item that T reads have committed. 
     + No commited transaction needs to be rolled back.
 - Cascadeless Schedule: read commited (only read data written by commited Ts).
-- Strict Schedule: repeatable read (lock an item until the T writes it commit).
+- Strict Schedule: lock an item until the T writes it commit.
 - Serializable Schedule: conflict equivalent to a Serial Schedule.
 - Serial Schedule: Ts execute 1 after another without interleaving (swiching)
 
 
 ## Isolation level
-| Isolation level     | Dirty read | Non-repeatable read | Phantom read |
-|---------------------|:----------:|:-------------------:|:------------:|
-| Read uncommited     | May        | May                 | May          |
-| Read commited       | X          | May                 | May          |
-| Repeatable read     | X          | X                   | May          |
-| Serilizable         | X          | X                   | X            |
+| Isolation level     | Dirty read | Non-repeatable read | Phantom read | Example Use Case | Reason |
+|---------------------|:----------:|:-------------------:|:------------:|------------------|--------|
+| Read uncommited     | May        | May                 | May          | Monitoring Dashboard | Maximum performance, speed is more important than accuracy, shouldn't lock the data to improve overall performance of system | 
+| Read commited       | X          | May                 | May          | Online shopping | See only commited data (current price), reload page will result in different price, still allow good concurrency (no locking) |
+| Repeatable read     | X          | X                   | May          | Seat reservation | Data in rows shouldn't change during transaction |
+| Serilizable         | X          | X                   | X            | Calculate total, Banking (e.g. withdrawal and balance) | When accuracy is extremely important (concurrency level will be reduced) | 
 
 - Non-repeatable read: a transaction access same row twice but different value
 - Phantom read: 2 same queries are executed but receive different set of rows
