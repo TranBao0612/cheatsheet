@@ -147,6 +147,9 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 `Note`: 
 - Attributes of R are considered to be in specific order.
 - Tuples of R are NOT considered to be in specific order.
+- Network/Hierarchical: Procedural, Navigation language
+- Non-procedural: Relational Model, Object-Relational Model, SQL
+- Procedural: Hierarchical Model, Network Model, C, PASCAL, FORTRAN, COBOL, BASIC, Java
 &nbsp;
 
 ## Relational Integrity Constraints
