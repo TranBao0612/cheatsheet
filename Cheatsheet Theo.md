@@ -55,14 +55,14 @@
     - Emerging: Object-oriented, Object-relational
     - Others: Single-user vs Multi-user, Centralized vs Distributed *(Homo/Heterogeneous)*
 - DB Architecture:
-    - Tier architecture: 1, 2, 3 *(2 Tier + application/web server)*, N-Tier
+    - Tier architecture: 1, 2, 3 *(2 Tier + application/web server/business layer)*, N-Tier
     - Centralized DB architecture: all data stored in 1 server
     - Distributed DB architecture: multi-server connection
     - Client-Server architecture: common for >= 2 tier
     - Three-Schema architecture
 
 ## 3-Schema Architecture
-| Level | Schema      | Deescribe | Use __ Model |
+| Level | Schema      | Describe | Use __ Model |
 |:-----:|:-----------:|:----------|:------------:|
 | 1     | Internal    | physical storage structure & path | physical |
 | 2     | Conceptual  | structure & constraints of whole DB | conceptual/implementation |
@@ -177,8 +177,8 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 |---------------------|:----------:|:-------------------:|:------------:|------------------|--------|
 | Read uncommited     | May        | May                 | May          | Monitoring Dashboard | Maximum performance, speed is more important than accuracy, shouldn't lock the data to improve overall performance of system | 
 | Read commited       | X          | May                 | May          | Online shopping | See only commited data (current price), reload page will result in different price, still allow good concurrency (no locking) |
-| Repeatable read     | X          | X                   | May          | Seat reservation | Data in rows shouldn't change during transaction |
-| Serilizable         | X          | X                   | X            | Calculate total, Banking (e.g. withdrawal and balance) | When accuracy is extremely important (concurrency level will be reduced) | 
+| Repeatable read     | X          | X                   | May          | Banking account data (e.g. retrieve current balance of all account) | Data in rows shouldn't change during transaction |
+| Serilizable         | X          | X                   | X            | Seat reservation | When accuracy is extremely important (concurrency level will be reduced) | 
 
 - Non-repeatable read: a transaction access same row twice but different value
 - Phantom read: 2 same queries are executed but receive different set of rows
