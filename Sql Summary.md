@@ -1,11 +1,11 @@
 # SQL COMMAND
 ## DEFINITION
 - DDL (Data Definition Language): defining, altering & deleting DB structures such as tables, indexes or schemas.
-- DML (Data Manipulation Language): fetch data from the database.
+- DML (Data Manipulation Language): manipulate the data stored in database tables.
     + High-level, non-procedural (declarative) *(e.g. relational language SQL)*
     + Low-level, procedural: retrieve 1 record/once
 - TCL (Transaction Control Language): control transaction.
-- DQL (Data Query Language): manipulate the data stored in database tables.
+- DQL (Data Query Language): fetch data from the database.
 - DCL (Data Control Language): control access to data in the database by granting or revoking permissions.
 ## COMMANDS
 - DDL: `CREATE`, `DROP`, `ALTER`, `TRUNCATE`, `COMMENT`, `RENAME ... TO ...`

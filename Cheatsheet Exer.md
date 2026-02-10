@@ -14,7 +14,7 @@
 - Complete set of Algebra Operation: $\sigma$, $\pi$, $-$, $\rho$, $\times$, $\cup$
 - Operations: 
     - Unary: $\sigma_{condition}(R)$, $\pi_{att1, att2, ...}(R)$, $\rho_{name(name1, name2, ...)}(R)$
-    - Binary: $R \underset{join condition}{\Join} S$ and (⟖, ⟕, ⟗), $R * S$, $R(A, B) \div S(B)$
+    - Binary: $R \underset{join condition}{\Join} S$ and (⟖, ⟕, ⟗), $R * S$, $R(A) \div S(B)$
     - Set theory: $R \cup S$, $R \cap S$, $R - S$, $R \times S$
     - Aggregate function: $\langle \textit{grouping attributes} \rangle \mathcal{F}_{func1 att1, func2 att2, ...} (R)$
 
