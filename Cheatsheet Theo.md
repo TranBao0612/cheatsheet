@@ -134,7 +134,7 @@ Data independence: lower level change => only `mapping` between its & higher-lev
     - No redundant dependency *(e.g. A->B, B->C, A->C ; this case A->C is redundant because we can derived it from 1st two FDs)*
 - Properties:
     - Each set of FDs have >= 1 equivalent minimal set.
-    - No simple algorithm to find all normal set
+    - No simple algorithm to find all minimal set
 
 ## Normalization of Relations
 - 1NF: Không có att nào là composite/multivalue
@@ -154,6 +154,11 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 | Lost Update          | 2 Transaction write 1 value -> 1 overwrite another -> incorrect data |
 | Temporary Update *(or Dirty Read)* | Transaction T1 write value, but fail after finish writing. T2 access the value before it rollback |
 | Incorrect Summary    | While transaction T loop through data to calculate aggregate function, T1, T2, ..., Tn update some of the value |
+
+## Transaction
+- Transaction: Logical unit of database processing that includes one or more access operations (read -retrieval, write - insert or update, delete).
+- System use log & journal to rollback
+- Transaction status: actived, partially commited, commited, failed, terminated
 
 ## Desirable properties of transaction: ACID
 - Atomic: a transaction is atomic unit of processing

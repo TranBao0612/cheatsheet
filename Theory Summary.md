@@ -62,6 +62,8 @@
 &nbsp;
 
 ## Categories of Data Model
+| | | |
+|-|-|-|
 | Conceptual DM      | high-level, semantic | entity-based, object-based *(e.g. ER Diagram)* |
 | Physical DM        | low-level, internal  | described how data is stored in a computer     |
 | Implementation DM  | representional       | concepts fall between 2 *(e.g. Relational DM)* |
@@ -123,11 +125,11 @@ Data independence: lower level change => only `mapping` between its & higher-lev
 - Weak entity has NO key attribute, only partial key
 
 ## Constraints on Relationships type
-- Cardinality Raio: Specify max participation *(1:1, 1:N, M:N)*
+- Cardinality Ratio: Specify max participation *(1:1, 1:N, M:N)*
 - Existence Dependency *(or Participation)* Constraint: Specify min participation 
     + 0 (optional participation, not-existence dependent)
     + 1 (mandatory participation, existence dependent)
-- Recursive Relation type: same entity with distinct role
+- Recursive Relationship type: same entity with distinct role
 
 &nbsp;
 
@@ -251,7 +253,7 @@ Data independence: lower level change => only `mapping` between its & higher-lev
     - No redundant dependency *(e.g. A->B, B->C, A->C ; this case A->C is redundant because we can derived it from 1st two FDs)*
 - Properties:
     - Each set of FDs have >= 1 equivalent minimal set.
-    - No simple algorithm to find all normal set
+    - No simple algorithm to find all mininmal set
 
 ## 10.2. Normalization of Relations
 - Normalization: The process of decomposing unsatisfactory "bad" relations by breaking up their attributes into smaller relations
